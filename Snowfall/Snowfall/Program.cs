@@ -4,9 +4,13 @@ using Snowfall;
 Random random = new();
 int screenWidth = 118;
 int screenHeight = 35;
-Console.WindowHeight = screenHeight + 15;
-Console.WindowWidth = screenWidth + 15;
 List<Snowflake> snowflakes = new();
+
+// Console settings
+Console.WindowHeight = screenHeight + 3;
+Console.WindowWidth = screenWidth + 3;
+Console.CursorVisible = false;
+
 
 void GenerateSnoflakes()
 {
@@ -14,7 +18,7 @@ void GenerateSnoflakes()
     {
         for (int j = 0; j < screenHeight; j++)
         {
-            if (random.NextDouble() > 0.8)
+            if (random.NextDouble() > 0.9)
             {
                 snowflakes.Add(SnowflakeFactory.Create(i, j, screenWidth, screenHeight));
             }
@@ -24,8 +28,10 @@ void GenerateSnoflakes()
 GenerateSnoflakes();
 Screen myScreen = new(snowflakes);
 
-while (true)
+
+while (!Console.KeyAvailable)
 {
-    Thread.Sleep(10);
+    Thread.Sleep(15);
     myScreen.Render();
 }
+Console.Clear();

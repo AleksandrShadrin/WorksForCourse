@@ -9,7 +9,7 @@ namespace Snowfall
 {
     public class Snowflake : IRenderable
     {
-        public char SnoflakeSymbol { get; set; } = '*';
+        public char SnoflakeSymbol { get; set; } = '\'';
         public Vector2 ScreenSize;
         public Vector2 PosOnScreen;
         private float weight;
@@ -22,6 +22,14 @@ namespace Snowfall
                 && ((int)Math.Round(prevPosOnScreen.Value.X) != (int)Math.Round(PosOnScreen.X)
                 || (int)Math.Round(prevPosOnScreen.Value.Y) != (int)Math.Round(PosOnScreen.Y)))
             {
+                if ((int)Math.Round(prevPosOnScreen.Value.X) != (int)Math.Round(PosOnScreen.X))
+                {
+                    SnoflakeSymbol = (int)Math.Round(prevPosOnScreen.Value.X) - (int)Math.Round(PosOnScreen.X) > 0 ? ',' : '`';
+                }
+                else
+                {
+                    SnoflakeSymbol = '\'';
+                }
                 Console.SetCursorPosition((int)Math.Round(prevPosOnScreen.Value.X), (int)Math.Round(prevPosOnScreen.Value.Y));
                 Console.Write(' ');
             }
@@ -32,9 +40,9 @@ namespace Snowfall
         }
         private void DisplaceSnoflake()
         {
-            float displaceFactor = random.NextDouble() > 0.5 ? 0.1f : -0.1f;
+            float displaceFactor = (random.NextDouble() > 0.5 ? 0.8f : -0.3f);
             if (weight == 0)
-                weight = (float)(random.NextDouble() + 0.1);
+                weight = (float)(random.NextDouble() + 0.2);
 
             PosOnScreen.Y += weight;
 
