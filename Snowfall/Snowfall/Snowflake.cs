@@ -32,9 +32,9 @@ namespace Snowfall
                 }
                 Console.SetCursorPosition((int)Math.Round(prevPosOnScreen.Value.X), (int)Math.Round(prevPosOnScreen.Value.Y));
                 Console.Write(' ');
+                Console.SetCursorPosition((int)Math.Round(PosOnScreen.X), (int)Math.Round(PosOnScreen.Y));
+                Console.Write(SnoflakeSymbol);
             }
-            Console.SetCursorPosition((int)Math.Round(PosOnScreen.X), (int)Math.Round(PosOnScreen.Y));
-            Console.Write(SnoflakeSymbol);
             prevPosOnScreen = PosOnScreen;
             DisplaceSnoflake();
         }

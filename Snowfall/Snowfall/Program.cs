@@ -31,7 +31,7 @@ Screen myScreen = new(snowflakes);
 
 while (!Console.KeyAvailable)
 {
-    Thread.Sleep(15);
+    Thread.Sleep(5);
     myScreen.Render();
 }
 Console.Clear();
