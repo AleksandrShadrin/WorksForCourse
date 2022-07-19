@@ -8,6 +8,7 @@ namespace Snowfall
 {
     public interface IRenderable
     {
+        void AddIRenderable(IRenderable renderable);
         void Render();
     }
 }

@@ -10,7 +10,7 @@ namespace Snowfall
     {
 
         private List<IRenderable> RenderableObjects { get; set; } = new();
-        private List<IRenderable> RenderablesToRemove { get; set; } = new();
+
         public Screen(IEnumerable<IRenderable> renderableObjects)
         {
             RenderableObjects.AddRange(renderableObjects);
@@ -19,10 +19,6 @@ namespace Snowfall
         {
 
         }
-        public void AddRenderableObject(IRenderable renderable)
-        {
-            RenderableObjects.Add(renderable);
-        }
 
         public void Render()
         {
@@ -30,6 +26,11 @@ namespace Snowfall
             {
                 item.Render();
             }
+        }
+
+        public void AddIRenderable(IRenderable renderable)
+        {
+            RenderableObjects.Add(renderable);
         }
     }
 }

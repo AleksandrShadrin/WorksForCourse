@@ -2,15 +2,17 @@
 using Snowfall;
 
 Random random = new();
+
+// Screen settings
 int screenWidth = 118;
 int screenHeight = 35;
-List<Snowflake> snowflakes = new();
 
 // Console settings
 Console.WindowHeight = screenHeight + 3;
 Console.WindowWidth = screenWidth + 3;
 Console.CursorVisible = false;
 
+IRenderable screen = new Screen();
 
 void GenerateSnoflakes()
 {
@@ -20,18 +22,17 @@ void GenerateSnoflakes()
         {
             if (random.NextDouble() > 0.9)
             {
-                snowflakes.Add(SnowflakeFactory.Create(i, j, screenWidth, screenHeight));
+                screen.AddIRenderable(SnowflakeFactory.Create(i, j, screenWidth, screenHeight));
             }
         }
     }
 }
-GenerateSnoflakes();
-Screen myScreen = new(snowflakes);
 
+GenerateSnoflakes();
 
 while (!Console.KeyAvailable)
 {
     Thread.Sleep(5);
-    myScreen.Render();
+    screen.Render();
 }
 Console.Clear();

@@ -64,5 +64,10 @@ namespace Snowfall
                 PosOnScreen.Y = 0;
             }
         }
+
+        public void AddIRenderable(IRenderable renderable)
+        {
+            throw new NotImplementedException("This object doesn't need such functionality.");
+        }
     }
 }
