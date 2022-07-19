@@ -36,9 +36,9 @@ namespace Snowfall
                 Console.Write(SnoflakeSymbol);
             }
             prevPosOnScreen = PosOnScreen;
-            DisplaceSnoflake();
+            DisplaceSnowflake();
         }
-        private void DisplaceSnoflake()
+        private void DisplaceSnowflake()
         {
             float displaceFactor = (random.NextDouble() > 0.5 ? 0.8f : -0.3f);
             if (weight == 0)
