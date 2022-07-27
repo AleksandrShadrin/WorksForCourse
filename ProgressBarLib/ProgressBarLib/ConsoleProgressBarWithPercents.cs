@@ -8,7 +8,7 @@ namespace ProgressBarLib
 {
     public sealed class ConsoleProgressBarWithPercents : ConsoleProgressBar
     {
-        public ConsoleProgressBarWithPercents(int max, Coords2D coords2D) : base(max, coords2D)
+        public ConsoleProgressBarWithPercents(int max, Coords2D posInConsole) : base(max, posInConsole)
         {
         }
         private const string indent = "     ";

@@ -4,11 +4,13 @@ namespace ProgressBarLib
 {
     public class ConsoleProgressBar : AbstractProgressBar
     {
+        public Coords2D PosInConsole { get; set; }
         private bool _needToResize = false;
         private int _consoleWidth = Console.WindowWidth;
         private int _previousBarLength;
-        public ConsoleProgressBar(int max, Coords2D coords2D) : base(max, coords2D)
+        public ConsoleProgressBar(int max, Coords2D posInConsole) : base(max)
         {
+            PosInConsole = posInConsole;
         }
 
         private void ClearLine()
@@ -22,7 +24,7 @@ namespace ProgressBarLib
                 Console.SetCursorPosition(PosInConsole.X, Console.CursorTop);
             }
 
-            Console.Write(new String(' ', _previousBarLength + 2));
+            Console.Write(new String(' ', _previousBarLength));
         }
 
         private int NumberOfCompletedProgressCells
