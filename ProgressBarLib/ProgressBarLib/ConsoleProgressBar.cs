@@ -4,53 +4,56 @@ namespace ProgressBarLib
 {
     public class ConsoleProgressBar : AbstractProgressBar
     {
-        private bool _initialized = false;
         private bool _needToResize = false;
         private int _consoleWidth = Console.WindowWidth;
-
-        public ConsoleProgressBar(int max) : base(max)
+        private int _previousBarLength;
+        public ConsoleProgressBar(int max, Coords2D coords2D) : base(max, coords2D)
         {
         }
 
         private void ClearLine()
         {
-            Console.SetCursorPosition(0, 0);
-            Console.Clear();
+            if (Console.WindowWidth - PosInConsole.X - _previousBarLength < 0)
+            {
+                Console.SetCursorPosition(PosInConsole.X, Console.CursorTop - 1);
+            }
+            else
+            {
+                Console.SetCursorPosition(PosInConsole.X, Console.CursorTop);
+            }
+
+            Console.Write(new String(' ', _previousBarLength + 2));
         }
 
-        private string CreateDefaultProgress()
-            => new String(' ', _consoleWidth / 2);
+        private int NumberOfCompletedProgressCells
+            => Convert.ToInt32(Math.Round((Percent * _consoleWidth / 2) / 100.0));
+        protected virtual string CreateProgressBar()
+            => $"[{new string('▒', NumberOfCompletedProgressCells)}" +
+                $"{new string(' ', Math.Max(_consoleWidth / 2 - NumberOfCompletedProgressCells, 0))}]";
 
         private void Resize()
         {
             ClearLine();
-            Console.SetCursorPosition(0, 0);
-            Console.Write($"[{CreateDefaultProgress()}]");
             Draw();
         }
 
         public override void Draw()
         {
             _needToResize = _consoleWidth != Console.WindowWidth;
-            _consoleWidth = Console.BufferWidth;
+            _consoleWidth = Console.WindowWidth;
 
             if (_needToResize)
             {
                 Resize();
                 _needToResize = false;
+                return;
             }
 
-            if (_initialized == false)
-            {
-                Console.Clear();
-                Console.Write($"[{CreateDefaultProgress()}]");
-                _initialized = true;
-            }
-            for (int i = 1; i <= Math.Round((int)(_consoleWidth / 2) * (Percent / 100.0)); i++)
-            {
-                Console.SetCursorPosition(i, 0);
-                Console.Write('▒');
-            }
+            string progressBar = CreateProgressBar();
+            _previousBarLength = progressBar.Length;
+
+            Console.SetCursorPosition(PosInConsole.X, PosInConsole.Y);
+            Console.Write(progressBar);
         }
     }
 }

@@ -6,18 +6,17 @@ using System.Threading.Tasks;
 
 namespace ProgressBarLib
 {
-    public class ConsoleProgressBarWithPercents : ConsoleProgressBar
+    public sealed class ConsoleProgressBarWithPercents : ConsoleProgressBar
     {
-        public ConsoleProgressBarWithPercents(int max) : base(max)
+        public ConsoleProgressBarWithPercents(int max, Coords2D coords2D) : base(max, coords2D)
         {
         }
-
-        public override void Draw()
+        private const string indent = "     ";
+        protected override string CreateProgressBar()
         {
-            base.Draw();
-
-            Console.SetCursorPosition(Console.WindowWidth / 2 + 10, 0);
-            Console.Write($"Loading: {Percent}");
+            string progressBar = base.CreateProgressBar();
+            progressBar += $"{indent}Current Percents: {Percent}%";
+            return progressBar;
         }
     }
 }

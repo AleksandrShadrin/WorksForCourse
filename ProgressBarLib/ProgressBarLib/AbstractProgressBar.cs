@@ -6,9 +6,11 @@
         public int CurrentPos { get; set; } = 0;
         public int Percent =>
             Math.Min((int)(Math.Round(100 * CurrentPos / (double)Max)), 100);
-        public AbstractProgressBar(int max)
+        public Coords2D PosInConsole { get; set; }
+        public AbstractProgressBar(int max, Coords2D posInConsole)
         {
             Max = max;
+            PosInConsole = posInConsole;
         }
         public void ShiftCurrentPos(int value)
         {
