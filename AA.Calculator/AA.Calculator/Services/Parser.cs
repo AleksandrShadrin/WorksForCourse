@@ -11,26 +11,29 @@ namespace AA.Calculator.Services
         private readonly IMapper<char, Operator> mapper;
         public Parser()
         {
-            _regex = new(@"\d+[\.Ee]?\d*");
+            _regex = new(@"(\d+\.?\d*)\s*([+-\/\*])?");
             mapper = new OperatorsMapper();
         }
         public Expression Parse(string expression)
         {
-            var operands = _regex.
-                                            Matches(expression).
-                                            Select((match) => match.Value).
-                                            ToList();
+            var matches = _regex.Matches(expression);
 
-            var strWithoutOperands = _regex.Replace(expression, "").Trim();
 
-            if (string.IsNullOrEmpty(strWithoutOperands) || strWithoutOperands.Length > 1 || operands.Count() != 2)
+
+            var op = matches[0].Groups[2].Value;
+            var operandL = matches[0].Groups[1].Value;
+            var operandR = matches[1].Groups[1].Value;
+
+            if (string.IsNullOrEmpty(op) ||
+                string.IsNullOrEmpty(operandL) ||
+                string.IsNullOrEmpty(operandR))
                 throw new InvalidExpresssionException(expression);
 
             return new()
             {
-                OperandL = float.Parse(operands[0], CultureInfo.InvariantCulture),
-                OperandR = float.Parse(operands[1], CultureInfo.InvariantCulture),
-                Operator = mapper.Map(Convert.ToChar(strWithoutOperands))
+                OperandL = float.Parse(operandL, CultureInfo.InvariantCulture),
+                OperandR = float.Parse(operandR, CultureInfo.InvariantCulture),
+                Operator = mapper.Map(Convert.ToChar(op))
             };
         }
     }
