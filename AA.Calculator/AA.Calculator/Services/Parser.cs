@@ -18,23 +18,26 @@ namespace AA.Calculator.Services
         {
             var matches = _regex.Matches(expression);
 
-
-
-            var op = matches[0].Groups[2].Value;
-            var operandL = matches[0].Groups[1].Value;
-            var operandR = matches[1].Groups[1].Value;
-
-            if (string.IsNullOrEmpty(op) ||
-                string.IsNullOrEmpty(operandL) ||
-                string.IsNullOrEmpty(operandR))
-                throw new InvalidExpresssionException(expression);
-
-            return new()
+            if (matches.Count == 2)
             {
-                OperandL = float.Parse(operandL, CultureInfo.InvariantCulture),
-                OperandR = float.Parse(operandR, CultureInfo.InvariantCulture),
-                Operator = mapper.Map(Convert.ToChar(op))
-            };
+                var op = matches[0].Groups[2].Value;
+                var operandL = matches[0].Groups[1].Value;
+                var operandR = matches[1].Groups[1].Value;
+
+                if (string.IsNullOrEmpty(op) ||
+                    string.IsNullOrEmpty(operandL) ||
+                    string.IsNullOrEmpty(operandR))
+                    throw new InvalidExpresssionException(expression);
+
+                return new()
+                {
+                    OperandL = float.Parse(operandL, CultureInfo.InvariantCulture),
+                    OperandR = float.Parse(operandR, CultureInfo.InvariantCulture),
+                    Operator = mapper.Map(Convert.ToChar(op))
+                };
+            }
+
+            throw new InvalidExpresssionException(expression);
         }
     }
 }
