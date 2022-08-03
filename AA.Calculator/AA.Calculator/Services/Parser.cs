@@ -11,7 +11,7 @@ namespace AA.Calculator.Services
         private readonly IMapper<char, Operator> mapper;
         public Parser()
         {
-            _regex = new(@"(\d+[\.Ee]?\d*)\s*([+-\/\*])?");
+            _regex = new(@"(-?\d+[\.Ee]?\d*)\s*([+-\/\*])?");
             mapper = new OperatorsMapper();
         }
         public Expression Parse(string expression)
