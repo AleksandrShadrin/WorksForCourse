@@ -1,4 +1,4 @@
-﻿namespace AA.Calculator.Services
+﻿namespace AA.Calculator.Services.Calculator
 {
     public interface ICalculator
     {

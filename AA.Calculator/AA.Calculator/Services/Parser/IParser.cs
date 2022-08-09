@@ -1,6 +1,6 @@
 ﻿using AA.Calculator.Models;
 
-namespace AA.Calculator.Services
+namespace AA.Calculator.Services.Parser
 {
     public interface IParser
     {

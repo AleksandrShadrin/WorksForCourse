@@ -1,18 +1,19 @@
 ﻿using AA.Calculator.CustomExceptions;
 using AA.Calculator.Models;
+using AA.Calculator.Services.Mapper;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
-namespace AA.Calculator.Services
+namespace AA.Calculator.Services.Parser
 {
     public class Parser : IParser
     {
         private readonly Regex _regex;
-        private readonly IMapper<char, Operator> mapper;
-        public Parser()
+        private readonly IMapper<char, Operator> _mapper;
+        public Parser(IMapper<char, Operator> mapper)
         {
-            _regex = new(@"(-?\d+[\.Ee]?\d*)\s*([+-\/\*])?");
-            mapper = new OperatorsMapper();
+            _regex = new(@"([-+]?\d+(?:[Ee]{1}\-?\d+|\.\d+|))\s*([-+\/\*])?");
+            _mapper = mapper == null ? throw new ArgumentNullException(nameof(mapper)) : mapper;
         }
         public Expression Parse(string expression)
         {
@@ -33,7 +34,7 @@ namespace AA.Calculator.Services
                 {
                     OperandL = float.Parse(operandL, CultureInfo.InvariantCulture),
                     OperandR = float.Parse(operandR, CultureInfo.InvariantCulture),
-                    Operator = mapper.Map(Convert.ToChar(op))
+                    Operator = _mapper.Map(Convert.ToChar(op))
                 };
             }
 

@@ -1,7 +1,7 @@
 ﻿using AA.Calculator.CustomExceptions;
 using AA.Calculator.Models;
 
-namespace AA.Calculator.Services
+namespace AA.Calculator.Services.Mapper
 {
     public class OperatorsMapper : IMapper<char, Operator>
     {
