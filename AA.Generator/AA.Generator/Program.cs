@@ -18,8 +18,6 @@ container.AddSingleton<IRender, ConsoleRender>();
 #endif
 
 
-
-
 container.AddSingleton<IGenerator, Generator>();
 
 

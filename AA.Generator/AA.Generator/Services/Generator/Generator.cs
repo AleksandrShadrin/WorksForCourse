@@ -1,6 +1,5 @@
 ﻿using AA.Generator.Services.Render;
 using AA.Generator.Utilities;
-using System.Diagnostics.Tracing;
 using System.Text;
 
 namespace AA.Generator.Services.Generator
@@ -33,6 +32,7 @@ namespace AA.Generator.Services.Generator
             var data = CSVUtilities.GetData(filePath);
             return GetRandomData(data).ToUpperInvariant();
         }
+
         public void Generate()
         {
             var sb = new StringBuilder();
