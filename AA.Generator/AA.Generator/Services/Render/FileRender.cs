@@ -10,7 +10,19 @@ namespace AA.Generator.Services.Render
         {
             _regex = new("^report-[0-9]+");
         }
-        private int GetReportNumber()
+        private int CreateFileNumber()
+        {
+            var fileNumbers = GetNumbersOfFiles();
+
+            int newNumber = 0;
+            if (fileNumbers.Count() > 0)
+            {
+                newNumber = fileNumbers.Max() + 1;
+            }
+
+            return newNumber;
+        }
+        private IEnumerable<int> GetNumbersOfFiles()
         {
             if (Directory.Exists(ReportsPath) == false)
                 Directory.CreateDirectory(ReportsPath);
@@ -32,19 +44,11 @@ namespace AA.Generator.Services.Render
                         return Convert.ToInt32(fileNumber);
                     }
                 });
-
-            int newNumber = 0;
-            if (fileNumbers.Count() > 0)
-            {
-                newNumber = fileNumbers.Max() + 1;
-            }
-
-            return newNumber;
+            return fileNumbers;
         }
-
         public void Render(string text)
         {
-            var newNumber = GetReportNumber();
+            var newNumber = CreateFileNumber();
             using (StreamWriter fs = File.CreateText($"{Path.Combine(ReportsPath, $"report-{newNumber}.txt")}"))
             {
                 fs.Write(text);
